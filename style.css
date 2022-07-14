@@ -1,0 +1,153 @@
+* {
+    box-sizing: border-box;
+}
+
+#mainContainer {
+    width: 700px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(101, 117, 128);
+    color: #000;
+}
+
+#inputsContainer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 30px;
+}
+
+input {
+    margin-top: 10px;
+    width: 250px;
+    height: 40px;
+    padding-left: 15px;
+    border: none;
+    border-radius: 5px;
+}
+
+.input-field {
+    display: inline-block;
+}
+
+.input-field label {
+    display: block;
+}
+
+#addBtn {
+    height: 40px;
+    width: 60px;
+    background-color: rgb(75, 133, 105);
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+#sum {
+    margin-bottom: 0;
+    align-self: flex-end;
+    margin-right: 60px;
+}
+
+#expensesContainer {
+    display: inline-block;
+    align-items: center;
+}
+
+.item {
+    padding-inline-start: 0;
+    display: grid;
+
+    grid-template-columns: 200px 380px;
+    justify-items: center;
+    align-items: center;
+}
+
+.item li {
+    list-style: none;
+    display: inline-block;
+}
+
+.item li:first-child {
+    margin-left: 0;
+}
+
+#expensesContainer li {
+    padding: 10px 0;
+}
+
+li button {
+    width: 30px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+ul .name-edit,
+ul .amount-edit,
+ul .confirm-button {
+    display: none;
+}
+
+i {
+    cursor: pointer;
+}
+
+#error-text {
+    width: 70%;
+    text-align: center;
+    color: #f00;
+    display: none;
+}
+
+.second-container {
+    display: grid;
+    grid-template-columns: 200px 100px 80px;
+    align-items: center;
+}
+
+.icon-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+@media only screen and (max-width: 750px) {
+    #mainContainer {
+        width: 400px;
+    }
+
+    #inputsContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #addBtn {
+        width: 100%;
+    }
+
+    .item {
+        grid-template-columns: 200px 150px;
+        /* justify-content: center; */
+        align-items: center;
+    }
+
+    .second-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #expensesContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .icon-container {
+        width: 100%;
+    }
+}
