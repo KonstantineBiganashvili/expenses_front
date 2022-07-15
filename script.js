@@ -138,8 +138,11 @@ const createExpense = async () => {
     if (!spentWhere.value) {
         errorsArray.push('Name Must Not Be Empty!');
     }
-    if (Number.isNaN(Number(spentAmount.value)) || !spentAmount.value) {
+    if (!spentAmount.value) {
         errorsArray.push('Spent Amount Must Be A Number!');
+    }
+    if (Number.isNaN(spentAmount.value)) {
+        errorsArray.push('Spent Amount Must Not Be Empty!');
     }
 
     if (errorsArray.length) {
