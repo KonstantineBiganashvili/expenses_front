@@ -132,44 +132,22 @@ const sample = (item) => {
     });
 };
 
-const createExpense = async () => {
-    const spentWhere = document.getElementById('spentWhereInput');
-    const spentAmount = document.getElementById('howMuchSpentInput');
-    const errors = document.getElementById('error-text');
-    errors.innerHTML = '';
-    const errorsArray = [];
 
-    if (!spentWhere.value) {
-        errorsArray.push('Name Must Not Be Empty!');
-    }
-    if (!spentAmount.value) {
-        errorsArray.push('Spent Amount Must Not Be Empty!');
-    }
-    if (Number.isNaN(spentAmount.value)) {
-        errorsArray.push('Spent Amount Must Be A Number!');
-    }
-
-    if (errorsArray.length) {
-        errors.style.display = 'block';
-        errorsArray.forEach((element) => {
-            errors.innerHTML += `<li>${element}</li>`;
-        });
-    } else {
-        try {
-            const result = await withBody('POST', {
-                name: spentWhere.value,
-                cost: Number(spentAmount.value),
-            });
+const deleteExpenseById = async (id) => {
+    try {
+        if (id) {
+            const result = await withoutBody('DELETE', id);
 
             const res = await result.json();
             sample(res);
-
-            spentWhere.value = '';
-            spentAmount.value = '';
-        } catch (error) {
-            errors.style.display = 'block';
-            errors.innerHTML = `<li>${error}</li>`;
+        } else {
+            const error = document.getElementById('error-text');
+            error.innerText = 'ID Does Not Exist!';
         }
+    } catch (error) {
+        document.getElementById('error-text').style.display = 'block';
+        document.getElementById('error-text').innerText = error;
+
     }
 };
 
