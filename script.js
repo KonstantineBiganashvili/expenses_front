@@ -1,14 +1,16 @@
 let sumOfExpenses = 0;
 const link = 'http://localhost:8080/expenses';
 
+const headers = {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+};
+
 const withBody = async (method, body, id) => {
     const finalLink = id ? `${link}/${id}` : link;
     return fetch(finalLink, {
         method,
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
+        headers,
         body: JSON.stringify(body),
     });
 };
@@ -17,10 +19,7 @@ const withoutBody = async (method, id) => {
     const finalLink = id ? `${link}/${id}` : link;
     return fetch(finalLink, {
         method,
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
+        headers,
     });
 };
 
@@ -73,6 +72,7 @@ const sample = (item) => {
         storeNameEdit.className = 'name-edit';
         spentAmountEdit.className = 'amount-edit';
         secondContainer.className = 'second-container';
+        spentAmountEditField.type = 'number';
 
         storeNameEditField.style.width = '200px';
         spentAmountEditField.style.width = '100px';
