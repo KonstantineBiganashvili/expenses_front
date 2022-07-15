@@ -1,4 +1,3 @@
-let sumOfExpenses = 0;
 const link = 'http://localhost:8080/expenses';
 
 const headers = {
@@ -26,7 +25,7 @@ const withoutBody = async (method, id) => {
 const sample = (item) => {
     const container = document.getElementById('expensesContainer');
     container.innerHTML = '';
-    sumOfExpenses = 0;
+    let sumOfExpenses = 0;
 
     item.forEach((element) => {
         const { id, name, cost, updatedAt } = element;
