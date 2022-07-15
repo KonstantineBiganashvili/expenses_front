@@ -154,9 +154,8 @@ const editExpenseById = async (editElReference) => {
 };
 
 const confirmEditById = async (confirmElReference) => {
-    const { storeName, spent, storeNameEditField, spentAmountEditField, id } =
-        confirmElReference;
-    const validFields = {};
+    const { storeNameEditField, spentAmountEditField, id } = confirmElReference;
+
     const errors = document.getElementById('error-text');
 
     const name = storeNameEditField.value;
@@ -169,8 +168,6 @@ const confirmEditById = async (confirmElReference) => {
     if (!name) errorsArray.push('Name Must Not Be Empty!');
     if (!cost) errorsArray.push(' Amount Must Not Be Empty!');
     if (Number.isNaN(cost)) errorsArray.push(' Amount Must Be a Number!');
-    if (name !== storeName) validFields.name = name;
-    if (cost !== spent) validFields.cost = cost;
     if (errorsArray.length) {
         errors.style.display = 'block';
         errorsArray.forEach((element) => {
@@ -178,7 +175,7 @@ const confirmEditById = async (confirmElReference) => {
         });
     } else if (id) {
         try {
-            const result = await withBody('PATCH', validFields, id);
+            const result = await withBody('PATCH', { name, cost }, id);
 
             const res = await result.json();
             sample(res);
