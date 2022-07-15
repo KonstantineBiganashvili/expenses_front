@@ -46,6 +46,7 @@ const sample = (item) => {
         const spentAmountEditField = document.createElement('input');
         const secondContainer = document.createElement('div');
         const iconContainer = document.createElement('div');
+        const spentSpan = document.createElement('span');
 
         const editButtons = document.createElement('li');
         const editIcon = document.createElement('i');
@@ -61,6 +62,7 @@ const sample = (item) => {
         confirmButtons.className = 'confirm-button';
         date.className = 'date-field';
         spent.className = 'spent-field';
+        spentSpan.className = 'spent-span-field';
         storeName.className = 'name-field';
         iconContainer.className = 'icon-container';
 
@@ -79,7 +81,8 @@ const sample = (item) => {
 
         storeName.innerText = name;
         date.innerText = updatedAt;
-        spent.innerText = `$${cost}`;
+        spent.innerText = '$';
+        spentSpan.innerText = `${cost}`;
         sum.innerText = `Sum: $${sumOfExpenses}`;
 
         editButtons.append(editIcon);
@@ -91,6 +94,7 @@ const sample = (item) => {
                 target,
                 storeName,
                 spent,
+                spentSpan,
                 storeNameEditField,
                 spentAmountEditField,
             };
@@ -117,7 +121,7 @@ const sample = (item) => {
         });
 
         iconContainer.append(confirmButtons, editButtons, deleteButtons);
-
+        spent.append(spentSpan);
         secondContainer.append(date, spent, spentAmountEdit, iconContainer);
 
         attributes.append(storeName, storeNameEdit, secondContainer);
@@ -127,6 +131,7 @@ const sample = (item) => {
         container.append(listItem);
     });
 };
+
 
 const deleteExpenseById = async (id) => {
     try {
@@ -142,6 +147,7 @@ const deleteExpenseById = async (id) => {
     } catch (error) {
         document.getElementById('error-text').style.display = 'block';
         document.getElementById('error-text').innerText = error;
+
     }
 };
 
