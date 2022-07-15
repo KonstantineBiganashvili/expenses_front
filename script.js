@@ -111,6 +111,8 @@ const sample = (item) => {
 
         confirmIcon.addEventListener('click', () => {
             const confirmElReference = {
+                storeName,
+                spent,
                 storeNameEditField,
                 spentAmountEditField,
                 id,
@@ -131,6 +133,50 @@ const sample = (item) => {
         container.append(listItem);
     });
 };
+
+
+const editExpenseById = async (editElReference) => {
+    const {
+        confirmButtons,
+        target,
+        storeName,
+        spent,
+        storeNameEditField,
+        spentAmountEditField,
+    } = editElReference;
+
+    const oldNameValue = storeName.innerText;
+    storeNameEditField.value = oldNameValue;
+    const oldSpentValue = Number(spent.innerText.substring(1));
+    spentAmountEditField.value = oldSpentValue;
+
+    storeName.style.display = 'none';
+    storeNameEditField.parentElement.style.display = 'block';
+    spent.style.display = 'none';
+    spentAmountEditField.parentElement.style.display = 'block';
+    target.style.display = 'none';
+    confirmButtons.style.display = 'block';
+};
+
+const confirmEditById = async (confirmElReference) => {
+    const { storeName, spent, storeNameEditField, spentAmountEditField, id } =
+        confirmElReference;
+    const validFields = {};
+
+    const errors = document.getElementById('error-text');
+
+    const name = storeNameEditField.value;
+    const cost = Number(spentAmountEditField.value);
+
+    const errorsArray = [];
+
+    errors.innerHTML = '';
+
+    if (!name) errorsArray.push('Name Must Not Be Empty!');
+    if (!cost) errorsArray.push(' Amount Must Not Be Empty!');
+    if (Number.isNaN(cost)) errorsArray.push(' Amount Must Be a Number!');
+    if (name !== storeName) validFields.name = name;
+    if (cost !== spent) validFields.cost = cost;
 
 const deleteExpenseById = async (id) => {
     try {
@@ -166,11 +212,25 @@ const createExpense = async () => {
         errorsArray.push('Spent Amount Must Be A Number!');
     }
 
+
     if (errorsArray.length) {
         errors.style.display = 'block';
         errorsArray.forEach((element) => {
             errors.innerHTML += `<li>${element}</li>`;
         });
+
+    } else if (id) {
+        try {
+            const result = await withBody('PATCH', validFields, id);
+
+            const res = await result.json();
+            sample(res);
+        } catch (error) {
+            errors.innerHTML = `<li>${error}</li>`;
+        }
+    } else {
+        errors.innerHTML = '<li>ID Does Not Exist!</li>';
+
     } else {
         try {
             const result = await withBody('POST', {
@@ -187,6 +247,7 @@ const createExpense = async () => {
             errors.style.display = 'block';
             errors.innerHTML = `<li>${error}</li>`;
         }
+
     }
 };
 
