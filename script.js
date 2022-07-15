@@ -128,6 +128,23 @@ const sample = (item) => {
     });
 };
 
+const deleteExpenseById = async (id) => {
+    try {
+        if (id) {
+            const result = await withoutBody('DELETE', id);
+
+            const res = await result.json();
+            sample(res);
+        } else {
+            const error = document.getElementById('error-text');
+            error.innerText = 'ID Does Not Exist!';
+        }
+    } catch (error) {
+        document.getElementById('error-text').style.display = 'block';
+        document.getElementById('error-text').innerText = error;
+    }
+};
+
 const render = async () => {
     const addButton = document.getElementById('addBtn');
     addButton.addEventListener('click', createExpense);
