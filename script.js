@@ -128,6 +128,63 @@ const sample = (item) => {
     });
 };
 
+const editExpenseById = async (editElReference) => {
+    const {
+        confirmButtons,
+        target,
+        storeName,
+        spent,
+        storeNameEditField,
+        spentAmountEditField,
+    } = editElReference;
+
+    const oldNameValue = storeName.innerText;
+    storeNameEditField.value = oldNameValue;
+    const oldSpentValue = Number(spent.innerText.substring(1));
+    spentAmountEditField.value = oldSpentValue;
+
+    storeName.style.display = 'none';
+    storeNameEditField.parentElement.style.display = 'block';
+    spent.style.display = 'none';
+    spentAmountEditField.parentElement.style.display = 'block';
+    target.style.display = 'none';
+    confirmButtons.style.display = 'block';
+};
+
+const confirmEditById = async (confirmElReference) => {
+    const { storeNameEditField, spentAmountEditField, id } = confirmElReference;
+
+    const errors = document.getElementById('error-text');
+
+    const name = storeNameEditField.value;
+    const cost = Number(spentAmountEditField.value);
+
+    const errorsArray = [];
+
+    errors.innerHTML = '';
+
+    if (!name) errorsArray.push('Name Must Not Be Empty!');
+    if (!cost) errorsArray.push(' Amount Must Not Be Empty!');
+    if (Number.isNaN(cost)) errorsArray.push(' Amount Must Be a Number!');
+    if (errorsArray.length) {
+        errors.style.display = 'block';
+        errorsArray.forEach((element) => {
+            errors.innerHTML += `<li>${element}</li>`;
+        });
+    } else if (id) {
+        try {
+            const result = await withBody('PATCH', { name, cost }, id);
+
+            const res = await result.json();
+            sample(res);
+        } catch (error) {
+            errors.innerHTML = `<li>${error}</li>`;
+        }
+    } else {
+        errors.innerHTML = '<li>ID Does Not Exist!</li>';
+    }
+};
+
 const render = async () => {
     const addButton = document.getElementById('addBtn');
     addButton.addEventListener('click', createExpense);
