@@ -29,7 +29,6 @@ const sample = (item) => {
 
     item.forEach((element) => {
         const { id, name, cost, updatedAt } = element;
-
         sumOfExpenses += Number(cost);
 
         const sum = document.getElementById('sum');
@@ -81,7 +80,7 @@ const sample = (item) => {
         storeName.innerText = name;
         date.innerText = updatedAt;
         spent.innerText = '$';
-        spentSpan.innerText = `${cost}`;
+        spentSpan.innerText = `${Number(cost).toFixed(2)}`;
         sum.innerText = `Sum: $${sumOfExpenses}`;
 
         editButtons.append(editIcon);
