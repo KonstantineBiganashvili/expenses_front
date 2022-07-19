@@ -109,6 +109,8 @@ const sample = (item) => {
 
         confirmIcon.addEventListener('click', () => {
             const confirmElReference = {
+                storeName,
+                spentSpan,
                 storeNameEditField,
                 spentAmountEditField,
                 id,
@@ -193,7 +195,7 @@ const editExpenseById = async (editElReference) => {
 };
 
 const confirmEditById = async (confirmElReference) => {
-    const { storeNameEditField, spentAmountEditField, id } = confirmElReference;
+    const { storeName, spentSpan, storeNameEditField, spentAmountEditField, id } = confirmElReference;
 
     const errors = document.getElementById('error-text');
 
@@ -205,8 +207,9 @@ const confirmEditById = async (confirmElReference) => {
     errors.innerHTML = '';
 
     if (!name) errorsArray.push('Name Must Not Be Empty!');
-    if (!cost) errorsArray.push(' Amount Must Not Be Empty!');
-    if (Number.isNaN(cost)) errorsArray.push(' Amount Must Be a Number!');
+    if (!cost) errorsArray.push('Amount Must Not Be Empty!');
+    if (Number.isNaN(cost)) errorsArray.push('Amount Must Be a Number!');
+    if (name === storeName.innerText && cost === Number(spentSpan.innerText)) errorsArray.push('You Must Change At Least One Field!');
     if (errorsArray.length) {
         errors.style.display = 'block';
         errorsArray.forEach((element) => {
